@@ -20,11 +20,12 @@ export class GamesRepository implements IGamesRepository {
     });
   }
 
-  countAllGames(): Promise<[ { count: string } ]> {
-    return Promise.resolve([ { count: '' } ]);
+  async countAllGames(): Promise<[ { count: string } ]> {
+    const count = await this.repository.count();
+    return [ { count: String(count) } ];
   }
 
-  findUsersByGameId(id: string): Promise<User[]> {
+  async findUsersByGameId(id: string): Promise<User[]> {
     return Promise.resolve([]);
   }
 }

@@ -26,6 +26,10 @@ export class GamesRepository implements IGamesRepository {
   }
 
   async findUsersByGameId(id: string): Promise<User[]> {
-    return Promise.resolve([]);
+    return this.repository
+    .createQueryBuilder()
+    .relation(Game, "users")
+    .of(id)
+    .loadMany();
   }
 }

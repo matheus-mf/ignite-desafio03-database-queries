@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Raw, Repository } from 'typeorm';
 
 import { User } from '../../../users/entities/User';
 import { Game } from '../../entities/Game';
@@ -13,8 +13,11 @@ export class GamesRepository implements IGamesRepository {
   }
 
   async findByTitleContaining(param: string): Promise<Game[]> {
-    return this.repository.find()
-      // Complete usando query builder
+    return this.repository.find({
+      where: {
+        title: Raw(() => `title ILIKE '%${ param }%'`),
+      },
+    });
   }
 
   countAllGames(): Promise<[ { count: string } ]> {
